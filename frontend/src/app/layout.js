@@ -2,7 +2,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
 import theme from "../theme";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material";
+import { StyledEngineProvider } from "@mui/material/styles";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.className} ${roboto.className}`}>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          </StyledEngineProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
