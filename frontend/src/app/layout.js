@@ -1,18 +1,13 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
-import { Inter, Roboto } from "next/font/google";
+import { Inter, Roboto, Montserrat } from "next/font/google";
 import "./globals.css";
 import theme from "../theme";
 import { ThemeProvider } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material/styles";
+import ResponsiveDrawer from "@/components/mui/ResponsiveDrawer";
 
 const inter = Inter({ subsets: ["latin"] });
-
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-roboto",
-});
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -22,10 +17,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${roboto.className}`}>
+      <body className={`${montserrat.className}`}>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+            <ThemeProvider theme={theme}>
+              <ResponsiveDrawer>{children}</ResponsiveDrawer>
+            </ThemeProvider>
           </StyledEngineProvider>
         </AppRouterCacheProvider>
       </body>
