@@ -13,8 +13,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
+        background: "#EFF5FFbb",
         foreground: "var(--foreground)",
+        "search-input": "#D5E1F9",
         "blue-light": "#C9F0FA",
         "custom-blue": "#3DA0EE",
         "custom-gray": "#9C9C9C"

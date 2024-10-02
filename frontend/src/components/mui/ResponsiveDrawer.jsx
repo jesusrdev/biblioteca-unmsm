@@ -15,6 +15,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import CustomList from "@/sections/layout/CustomList";
+import SearchInput from "@/sections/layout/SearchInput";
 
 const drawerWidth = 240;
 
@@ -69,10 +70,10 @@ export default function ResponsiveDrawer({ children }) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
+        className="bg-white shadow-none"
       >
-        <Toolbar>
+        <Toolbar className="">
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
@@ -82,9 +83,7 @@ export default function ResponsiveDrawer({ children }) {
               <MenuIcon />
             </ListItemIcon>
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
+          <SearchInput />
         </Toolbar>
       </AppBar>
       <Box
