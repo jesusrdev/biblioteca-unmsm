@@ -14,8 +14,22 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import CustomList from "@/sections/layout/CustomList";
 
 const drawerWidth = 240;
+
+const principalList = [
+  { text: "Inicio" },
+  { text: "Categoría" },
+  { text: "Mis Préstamos" },
+  { text: "Favoritos" },
+];
+
+const sectionList = [
+  { text: "Ajustes" },
+  { text: "Soporte" },
+  { text: "Configuración" },
+];
 
 export default function ResponsiveDrawer({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -40,29 +54,9 @@ export default function ResponsiveDrawer({ children }) {
     <div>
       <Toolbar>Yisus Library</Toolbar>
       <Divider />
-      <List className="w-full px-3">
-        {["Inicio", "Categoría", "Mis Préstamos", "Favoritos"].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding className="hover:bg-blue-light my-3 rounded-full text-custom-gray font-montserrat">
-              <ListItemButton>
-                <ListItemIcon></ListItemIcon>
-                <ListItemText primary={text} className="font-montserrat font-bold" />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
-      </List>
+      <CustomList list={principalList} />
       <Divider />
-      <List className="w-full px-3">
-        {["Ajustes", "Soporte", "Configuración"].map((text, index) => (
-          <ListItem key={text} disablePadding className="hover:bg-blue-light my-3 rounded-full text-custom-gray">
-            <ListItemButton>
-              <ListItemIcon></ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <CustomList list={sectionList} />
     </div>
   );
 
