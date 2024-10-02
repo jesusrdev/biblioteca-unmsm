@@ -15,6 +15,13 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "blue-light": "#C9F0FA",
+        "custom-blue": "#3DA0EE",
+        "custom-gray": "#9C9C9C"
+      },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
     },
   },
