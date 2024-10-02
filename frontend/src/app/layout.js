@@ -6,8 +6,16 @@ import { ThemeProvider } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material/styles";
 import ResponsiveDrawer from "@/components/mui/ResponsiveDrawer";
 
-const inter = Inter({ subsets: ["latin"] });
-const montserrat = Montserrat({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -17,7 +25,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className}`}>
+      <body className={`${montserrat.className} ${inter.variable}`}>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>

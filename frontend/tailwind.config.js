@@ -20,8 +20,8 @@ module.exports = {
         "custom-gray": "#9C9C9C"
       },
       fontFamily: {
-        montserrat: ["Montserrat", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        montserrat: ['var(--font-montserrat)', "sans-serif"],
+        inter: ['var(--font-inter)', "sans-serif"],
       },
     },
   },
