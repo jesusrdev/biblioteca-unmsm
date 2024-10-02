@@ -16,8 +16,10 @@ export default function CustomList({ list }) {
             disablePadding
             className="my-3 "
           >
-            <ListItemButton className="rounded-full hover:bg-blue-light text-custom-gray">
-              <ListItemIcon></ListItemIcon>
+            <ListItemButton className="items-center transition-colors rounded-full hover:bg-blue-light hover:text-black text-custom-gray">
+              <ListItemIcon className="mx-4 min-w-fit"> 
+                <img src={item.icon} alt="icon" width={25} height={25} />
+              </ListItemIcon>
               <ListItemText
                 primary={item.text}
                 className="*:font-bold font-montserrat"

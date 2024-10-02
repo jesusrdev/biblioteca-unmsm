@@ -16,21 +16,11 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import CustomList from "@/sections/layout/CustomList";
 import SearchInput from "@/sections/layout/SearchInput";
+import ProfileButton from "@/sections/layout/ProfileButton";
+import { principalList, sectionList } from "@/sections/layout/items-bar";
+import Image from "next/image";
 
 const drawerWidth = 240;
-
-const principalList = [
-  { text: "Inicio" },
-  { text: "Categoría" },
-  { text: "Mis Préstamos" },
-  { text: "Favoritos" },
-];
-
-const sectionList = [
-  { text: "Ajustes" },
-  { text: "Soporte" },
-  { text: "Configuración" },
-];
 
 export default function ResponsiveDrawer({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -53,7 +43,19 @@ export default function ResponsiveDrawer({ children }) {
 
   const drawer = (
     <div>
-      <Toolbar>Yisus Library</Toolbar>
+      <Toolbar className="px-2">
+        <div className="flex items-center justify-center p-2 rounded-full bg-gradient-to-bl from-blue-gr/40 from-0% via-to-purple-gr/40 via-50% to-pink-gr/40 to-100% gradient-logo mr-4 border-[4px] border-white border-solid shadow-xl">
+          <Image
+            src="/icons/logo.svg"
+            alt="logo"
+            width={28}
+            height={28}
+            className=""
+            priority
+          />
+        </div>
+        <p className="text-xl font-bold">Yisus Library</p>
+      </Toolbar>
       <Divider />
       <CustomList list={principalList} />
       <Divider />
@@ -72,7 +74,7 @@ export default function ResponsiveDrawer({ children }) {
         }}
         className="bg-white shadow-none"
       >
-        <Toolbar className="">
+        <Toolbar className="justify-between">
           <IconButton
             aria-label="open drawer"
             edge="start"
@@ -84,6 +86,7 @@ export default function ResponsiveDrawer({ children }) {
             </ListItemIcon>
           </IconButton>
           <SearchInput />
+          <ProfileButton />
         </Toolbar>
       </AppBar>
       <Box
