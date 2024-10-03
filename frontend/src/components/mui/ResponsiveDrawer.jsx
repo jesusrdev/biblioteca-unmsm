@@ -43,8 +43,8 @@ export default function ResponsiveDrawer({ children }) {
 
   const drawer = (
     <div>
-      <Toolbar className="px-2">
-        <div className="flex items-center justify-center p-2 rounded-full bg-gradient-to-bl from-blue-gr/40 from-0% via-to-purple-gr/40 via-50% to-pink-gr/40 to-100% gradient-logo mr-4 border-[4px] border-white border-solid shadow-xl">
+      <Toolbar className="px-3">
+        <div className="flex items-center justify-center p-2 rounded-full bg-gradient-to-bl from-blue-gr/40 from-0% via-to-purple-gr/40 via-50% to-pink-gr/40 to-100% gradient-logo mr-2 border-[4px] border-white border-solid shadow-xl">
           <Image
             src="/icons/logo.svg"
             alt="logo"
