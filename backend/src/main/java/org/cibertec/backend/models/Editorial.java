@@ -15,7 +15,7 @@ public class Editorial {
     @Column(name = "id_editorial")
     private int idEditorial ;
 
-    @Column(name = "nombre_editorial", length = 50, nullable = false )
-    private String nombreEditorial;
+    @Column(name = "name_editorial", length = 50, nullable = false )
+    private String nameEditorial;
 
 }
