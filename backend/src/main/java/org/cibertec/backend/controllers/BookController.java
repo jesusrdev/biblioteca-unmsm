@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("book")
 public class BookController {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
@@ -38,7 +39,7 @@ public class BookController {
         this.editorialRepository = editorialRepository;
     }
 
-    @PostMapping("/createbook")
+    @PostMapping("/create")
     public ResponseEntity<?> createBook(
             @RequestParam("title") String title,
             @RequestParam("authorId") Integer authorId,
@@ -108,7 +109,7 @@ public class BookController {
         return "/books/" + uniqueFilename;  // Esta es la ruta en el servidor
     }
 
-    @PutMapping("updatebook/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<?> updateBook(
             @PathVariable Integer id,
             @RequestParam("title") String title,
