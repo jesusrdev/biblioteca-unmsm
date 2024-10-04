@@ -4,10 +4,10 @@ import CustomCardMedia from "../book/CustomCardMedia";
 
 export default function CardBook({ book }) {
   return (
-    <Button className="h-full p-0 w-fit m-auto">
-      <CustomCard className="h-full max-w-44 px-0 py-0 m-0">
+    <Button className="h-full p-0 m-auto w-fit">
+      <CustomCard className="h-full px-0 py-0 m-0 max-w-44">
         <CustomCardMedia
-          image={`${process.env.NEXT_PUBLIC_API_URL}/${book.imageUrl}`}
+          image={`${process.env.NEXT_PUBLIC_API_URL}${book.imageUrl}`}
         />
         <CardContent
           sx={{
