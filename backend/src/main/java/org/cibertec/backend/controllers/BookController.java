@@ -11,15 +11,17 @@ import org.cibertec.backend.repositories.EditorialRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class BookController {
@@ -81,11 +83,20 @@ public class BookController {
     }
 
     private String saveImage(MultipartFile imageFile) throws Exception {
-        // Obtener el nombre original del archivo
+        // Obtener la extensión del archivo original
         String originalFilename = imageFile.getOriginalFilename();
+        String extension = "";
+
+        if (originalFilename != null && originalFilename.contains(".")) {
+            extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        }
+
+        // Generar un UUID para el nombre del archivo
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String uniqueFilename = UUID.randomUUID().toString() + "_" + timestamp + extension;
 
         // Definir la ruta donde se almacenará la imagen
-        Path imagePath = Paths.get("uploads/images", originalFilename);
+        Path imagePath = Paths.get("src/main/resources/static/books").resolve(uniqueFilename);
 
         // Crear directorios si no existen
         Files.createDirectories(imagePath.getParent());
@@ -93,8 +104,86 @@ public class BookController {
         // Guardar la imagen en el disco
         Files.write(imagePath, imageFile.getBytes());
 
-        // Devolver la URL de la imagen (en este caso, la ruta del archivo)
-        return imagePath.toString();  // Esta es la ruta en el servidor
+        // Devolver la ruta donde se guardó la imagen
+        return "/books/" + uniqueFilename;  // Esta es la ruta en el servidor
+    }
+
+    @PutMapping("updatebook/{id}")
+    public ResponseEntity<?> updateBook(
+            @PathVariable Integer id,
+            @RequestParam("title") String title,
+            @RequestParam("authorId") Integer authorId,
+            @RequestParam("categoryId") Integer categoryId,
+            @RequestParam("editorialId") Integer editorialId,
+            @RequestParam("publicationDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date publicationDate,
+            @RequestParam("description") String description,
+            @RequestParam("numberOfPage") Integer numberOfPage,
+            @RequestParam("language") String language,
+            @RequestParam("isbn") String isbn,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) throws Exception {
+
+        // Buscar si el libro existe
+        Optional<Book> exiOptionalBook = bookRepository.findById(id);
+
+        // Excepcion en caso no se encuentre
+        if (!exiOptionalBook.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Libro no encontrado");
+        }
+
+        // Obtener el libro existente
+        Book existingBook = exiOptionalBook.get();
+
+        // Actualizar los datos del libro
+        existingBook.setTitle(title);
+
+        Author author = new Author();
+        author.setIdAuthor(authorId);
+        existingBook.setAuthor(author);
+
+        Category category = new Category();
+        category.setIdCategory(categoryId);
+        existingBook.setCategory(category);
+
+        Editorial editorial = new Editorial();
+        editorial.setIdEditorial(editorialId);
+        existingBook.setEditorial(editorial);
+
+        existingBook.setPublicationDate(publicationDate);
+        existingBook.setDescription(description);
+        existingBook.setNumberOfPage(numberOfPage);
+        existingBook.setLanguage(language);
+        existingBook.setIsbn(isbn);
+
+        // Verifica si se ha subido una nueva imagen
+        if (imageFile != null && !imageFile.isEmpty()){
+
+            //Obtener la imagen antigua
+            String oldImageUrl = existingBook.getImageUrl();
+
+            // Verificar si existe la imagen
+            if (oldImageUrl != null){
+                // Obtener el path antiguo
+                Path olImagePath = Paths.get("src/main/resources/static/books").resolve(oldImageUrl);
+                // Eliminar imagen anterior
+                Files.deleteIfExists(olImagePath);
+
+            }
+
+            // Guardar la nueva imagen
+            String newImageUrl = saveImage(imageFile);
+            existingBook.setImageUrl(newImageUrl);
+
+        }
+
+        try {
+            // Guardar los cambios en el repositorio
+            Book updateBook = bookRepository.save(existingBook);
+            return ResponseEntity.ok(updateBook);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el libro" + e.getMessage());
+        }
+
+
     }
 
 }
