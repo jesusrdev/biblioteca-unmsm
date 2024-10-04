@@ -1,7 +1,5 @@
-import { books, categories } from "@/example-data";
 import Categories from "@/sections/books/Categories";
-import CarouselBooks from "@/sections/books/CarouselBooks";
-import { Button } from "@mui/material";
+import PopularBooks from "@/sections/books/PopularBooks";
 
 export default function Home() {
   return (
@@ -9,11 +7,8 @@ export default function Home() {
       <h1 className="my-20 text-5xl font-bold text-center">
         Proyecto Biblioteca UNMSM
       </h1>
-      <CarouselBooks
-        text="Lo más leído"
-        book={books}
-      />
-      <Categories categories={categories} />
+      <PopularBooks />
+      <Categories />
     </div>
   );
 }

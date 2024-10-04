@@ -5,8 +5,10 @@ import CustomCardMedia from "../book/CustomCardMedia";
 export default function CardBook({ book }) {
   return (
     <Button className="h-full p-0 w-fit m-auto">
-      <CustomCard className="h-full px-0 py-0 m-0">
-        <CustomCardMedia image={book.image} />
+      <CustomCard className="h-full max-w-44 px-0 py-0 m-0">
+        <CustomCardMedia
+          image={`${process.env.NEXT_PUBLIC_API_URL}/${book.imageUrl}`}
+        />
         <CardContent
           sx={{
             textTransform: "none",
@@ -18,7 +20,7 @@ export default function CardBook({ book }) {
             {book.title}
           </p>
           <p className="m-1 text-xs font-medium font-inter">
-            {book.author.name}
+            {book.author?.name}
           </p>
         </CardContent>
       </CustomCard>
