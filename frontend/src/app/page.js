@@ -12,7 +12,6 @@ export default function Home() {
       <CarouselBooks
         text="Lo más leído"
         book={books}
-        button={<Button variant="contained">Ver más</Button>}
       />
       <Categories categories={categories} />
     </div>
