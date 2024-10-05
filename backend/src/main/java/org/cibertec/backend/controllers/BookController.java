@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("book")
+@RequestMapping("books")
 public class BookController {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
