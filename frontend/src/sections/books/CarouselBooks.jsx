@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 export default function CarouselBooks({ text, button, urlGet, ...props }) {
   const [books, setBooks] = useState([]);
-  // Get the books from the API filtered by the category
   useEffect(() => {
     const fetchBooks = async () => {
       try {
