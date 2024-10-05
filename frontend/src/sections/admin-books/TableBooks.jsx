@@ -1,11 +1,27 @@
 "use client";
+import React, { useState, useEffect } from 'react';
+import { Box, Button, Modal, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import CustomTable from '@/components/mui/CustomTable';
 import { getBooks, createBook, updateBook, deleteBook } from "@/api/bookapi";
 import { getAuthors } from "@/api/authorapi";
 import { getCategories } from "@/api/categoryapi";
 import { getEditorials } from "@/api/editorialapi";
-import CustomTable from "@/components/mui/CustomTable";
-import { useEffect, useState } from "react";
-import { Box, Button } from "@mui/material";
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  height: 700,
+  overflow: 'auto',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function TableBooks() {
   const [books, setBooks] = useState([]);
@@ -13,6 +29,8 @@ export default function TableBooks() {
   const [categories, setCategories] = useState([]);
   const [editorials, setEditorials] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [currentBook, setCurrentBook] = useState(null);
 
   useEffect(() => {
     fetchBooks();
@@ -60,46 +78,40 @@ export default function TableBooks() {
     }
   };
 
-  const handleCreateBook = async (newBook) => {
-    try {
-      const createdBook = await createBook(newBook);
-      setBooks(oldBooks => [...oldBooks, {...createdBook, id: createdBook._links.self.href}]);
-    } catch (error) {
-      console.error("Error creating book:", error);
-    }
+  const handleOpenModal = (book = null) => {
+    setCurrentBook(book);
+    setOpenModal(true);
   };
 
-  const handleUpdateBook = async (updatedBook) => {
+  const handleCloseModal = () => {
+    setCurrentBook(null);
+    setOpenModal(false);
+  };
+
+  const handleSaveBook = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const bookData = Object.fromEntries(formData.entries());
+
     try {
-      await updateBook(updatedBook);
-      setBooks(oldBooks => oldBooks.map(book => 
-        book.id === updatedBook.id ? {...updatedBook} : book
-      ));
+      if (currentBook) {
+        await updateBook({...currentBook, ...bookData});
+      } else {
+        await createBook(bookData);
+      }
+      fetchBooks();
+      handleCloseModal();
     } catch (error) {
-      console.error("Error updating book:", error);
+      console.error("Error saving book:", error);
     }
   };
 
   const handleDeleteBook = async (id) => {
     try {
       await deleteBook(id);
-      setBooks(oldBooks => oldBooks.filter(book => book.id !== id));
+      setBooks(books.filter(book => book.id !== id));
     } catch (error) {
       console.error("Error deleting book:", error);
-    }
-  };
-
-  const handleImageUpload = async (event, id) => {
-    const file = event.target.files[0];
-    if (file) {
-      // Here you would typically upload the file to your server and get a URL back
-      // For this example, we'll just use a placeholder URL
-      const imageUrl = URL.createObjectURL(file);
-      setBooks(oldBooks => oldBooks.map(book => 
-        book.id === id ? {...book, imageUrl} : book
-      ));
-      // You should also update the book on the server with the new image URL
-      // await updateBook({id, imageUrl});
     }
   };
 
@@ -109,82 +121,61 @@ export default function TableBooks() {
       headerName: "Imagen",
       width: 100,
       renderCell: (params) => (
-        <div>
-          <img
-            src={`${process.env.NEXT_PUBLIC_API_URL}${params.value}`}
-            className="w-12 h-full m-auto"
-          />
-          <input
-            type="file"
-            accept="image/*"
-            style={{ display: 'none' }}
-            id={`image-upload-${params.id}`}
-            onChange={(e) => handleImageUpload(e, params.id)}
-          />
-          <label htmlFor={`image-upload-${params.id}`}>
-            <Button component="span">Cambiar</Button>
-          </label>
-        </div>
+        <img
+          src={`${process.env.NEXT_PUBLIC_API_URL}${params.value}`}
+          alt={params.row.title}
+          style={{ width: '50px', height: '100%' }}
+        />
       ),
     },
-    { field: "title", headerName: "Título", width: 200, editable: true },
-    {
-      field: "author",
-      headerName: "Autor",
+    { field: "title", headerName: "Título", width: 200 },
+    { 
+      field: "author", 
+      headerName: "Autor", 
       width: 200,
-      editable: true,
-      type: 'singleSelect',
-      valueOptions: authors.map(author => ({ value: author._links.self.href, label: author.nameAuthor })),
-      valueGetter: (value, row) => row.author?._links?.self?.href,
-      valueSetter: (value, row) => {
-        const author = authors.find(a => a._links.self.href === value);
-        return { ...row, author: author || {} };
-      },
+      valueGetter: (value, row) => row.author?.nameAuthor,
     },
-    {
-      field: "category",
-      headerName: "Categoría",
+    { 
+      field: "category", 
+      headerName: "Categoría", 
       width: 150,
-      editable: true,
-      type: 'singleSelect',
-      valueOptions: categories.map(category => ({ value: category._links.self.href, label: category.nameCategory })),
-      valueGetter: (value, row) => row.category?._links?.self?.href,
-      valueSetter: (params) => {
-        const category = categories.find(c => c._links.self.href === params.value);
-        return { ...params.row, category: category || {} };
-      },
+      valueGetter: (value, row) => row.category?.nameCategory,
     },
-    {
-      field: "editorial",
-      headerName: "Editorial",
+    { 
+      field: "editorial", 
+      headerName: "Editorial", 
       width: 150,
-      editable: true,
-      type: 'singleSelect',
-      valueOptions: editorials.map(editorial => ({ value: editorial._links.self.href, label: editorial.nameEditorial })),
-      valueGetter: (value, row) => row.editorial?._links?.self?.href,
-      valueSetter: (params) => {
-        const editorial = editorials.find(e => e._links.self.href === params.value);
-        return { ...params.row, editorial: editorial || {} };
-      },
+      valueGetter: (value, row) => row.editorial?.nameEditorial,
     },
-    { field: "description", headerName: "Descripción", width: 200, editable: true },
-    { field: "numberOfPage", headerName: "Número de páginas", width: 150, editable: true, type: 'number' },
-    { field: "language", headerName: "Idioma", width: 100, editable: true },
-    { field: "isbn", headerName: "ISBN", width: 100, editable: true },
-    {
-      field: "publicationDate",
-      headerName: "Fecha de publicación",
+    { field: "description", headerName: "Descripción", width: 200 },
+    { field: "numberOfPage", headerName: "Número de páginas", width: 150, type: 'number' },
+    { field: "language", headerName: "Idioma", width: 100 },
+    { field: "isbn", headerName: "ISBN", width: 100 },
+    { 
+      field: "publicationDate", 
+      headerName: "Fecha de publicación", 
       width: 130,
-      editable: true,
-      type: 'date',
-      valueGetter: (value, row) => {
-        // Convert the string date to a Date object
-        return value ? new Date(value) : null;
-      },
-      valueSetter: (value, row) => {
-        // Convert the Date object back to a string when saving
-        return { ...row, publicationDate: value.toISOString().split('T')[0] };
-      },
+      valueGetter: (value, row) => row.publicationDate ? new Date(row.publicationDate).toLocaleDateString() : null,
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Acciones',
+      width: 100,
+      getActions: (params) => [
+        <GridActionsCellItem
+          key="edit"
+          icon={<EditIcon />}
+          label="Edit"
+          onClick={() => handleOpenModal(params.row)}
+        />,
+        <GridActionsCellItem
+          key="delete"
+          icon={<DeleteIcon />}
+          label="Delete"
+          onClick={() => handleDeleteBook(params.id)}
+        />,
+      ],
     },
   ];
 
@@ -194,10 +185,69 @@ export default function TableBooks() {
         rows={books} 
         columns={columns}
         loading={isLoading}
-        onRowAdd={handleCreateBook}
-        onRowUpdate={handleUpdateBook}
-        onRowDelete={handleDeleteBook}
+        onAdd={() => handleOpenModal()}
       />
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="book-modal-title"
+      >
+        <Box sx={modalStyle} component="form" onSubmit={handleSaveBook}>
+          <h2 id="book-modal-title">{currentBook ? 'Editar Libro' : 'Agregar Libro'}</h2>
+          <TextField name="title" label="Título" fullWidth margin="normal" defaultValue={currentBook?.title || ''} />
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="author-label">Autor</InputLabel>
+            <Select
+              labelId="author-label"
+              name="author"
+              defaultValue={currentBook?.author?._links?.self?.href || ''}
+            >
+              {authors.map((author) => (
+                <MenuItem key={author._links.self.href} value={author._links.self.href}>
+                  {author.nameAuthor}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="category-label">Categoría</InputLabel>
+            <Select
+              labelId="category-label"
+              name="category"
+              defaultValue={currentBook?.category?._links?.self?.href || ''}
+            >
+              {categories.map((category) => (
+                <MenuItem key={category._links.self.href} value={category._links.self.href}>
+                  {category.nameCategory}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="editorial-label">Editorial</InputLabel>
+            <Select
+              labelId="editorial-label"
+              name="editorial"
+              defaultValue={currentBook?.editorial?._links?.self?.href || ''}
+            >
+              {editorials.map((editorial) => (
+                <MenuItem key={editorial._links.self.href} value={editorial._links.self.href}>
+                  {editorial.nameEditorial}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField name="description" label="Descripción" fullWidth margin="normal" multiline rows={4} defaultValue={currentBook?.description || ''} />
+          <TextField name="numberOfPage" label="Número de páginas" type="number" fullWidth margin="normal" defaultValue={currentBook?.numberOfPage || ''} />
+          <TextField name="language" label="Idioma" fullWidth margin="normal" defaultValue={currentBook?.language || ''} />
+          <TextField name="isbn" label="ISBN" fullWidth margin="normal" defaultValue={currentBook?.isbn || ''} />
+          <TextField name="publicationDate" label="Fecha de publicación" type="date" fullWidth margin="normal" InputLabelProps={{ shrink: true }} defaultValue={currentBook?.publicationDate || ''} />
+          <input type="file" name="image" accept="image/*" />
+          <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+            Guardar
+          </Button>
+        </Box>
+      </Modal>
     </Box>
   );
 }

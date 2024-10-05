@@ -10,9 +10,6 @@ export default function AdminBooksPage() {
         Administrar libros
       </h1>
       <CustomCard className="w-full">
-        <div className="mb-5">
-          <Button variant="contained">Crear nuevo libro</Button>
-        </div>
         <TableBooks />
       </CustomCard>
     </main>
