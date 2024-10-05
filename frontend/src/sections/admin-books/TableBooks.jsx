@@ -1,6 +1,6 @@
 "use client";
 import { getBooks } from "@/api/bookapi";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import CustomTable from "@/components/mui/CustomTable";
 import { useEffect, useState } from "react";
 
 export default function TableBooks() {
@@ -56,21 +56,12 @@ export default function TableBooks() {
     {
       field: "publicationDate",
       headerName: "Fecha de publicación",
-      width: 100,
+      width: 130,
     },
   ];
   return (
     <div>
-      <DataGrid
-        rows={books}
-        density="comfortable"
-        columns={columns}
-        pageSize={10}
-        disableRowSelectionOnClick={true}
-        rowsPerPageOptions={[10, 20, 30, 40, 50]}
-        getRowId={(row) => row._links.self.href}
-        slots={{ toolbar: GridToolbar }}
-      />
+      <CustomTable columns={columns} rows={books} />
     </div>
   );
 }
