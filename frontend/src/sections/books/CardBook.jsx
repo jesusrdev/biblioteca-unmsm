@@ -19,8 +19,8 @@ export default function CardBook({ book }) {
           <p className="m-1 text-sm font-semibold uppercase font-inter">
             {book.title}
           </p>
-          <p className="m-1 text-xs font-medium font-inter">
-            {book.author?.name}
+          <p className="m-1 text-[13px] font-medium font-inter">
+            {book.author?.nameAuthor}
           </p>
         </CardContent>
       </CustomCard>
