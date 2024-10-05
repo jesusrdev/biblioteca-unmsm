@@ -26,28 +26,28 @@ export default function TableBooks() {
       renderCell: (params) => (
         <img
           src={`${process.env.NEXT_PUBLIC_API_URL}${params.value}`}
-          className="h-full m-auto"
+          className="w-12 h-full m-auto"
         />
       ),
     },
-    { field: "title", headerName: "Título", width: 200 },
+    { field: "title", headerName: "Título", width: 200, hideable: true },
     {
       field: "author",
       headerName: "Autor",
       width: 200,
-      renderCell: (params) => params.value.nameAuthor,
+      valueGetter: (value, row) => row.author.nameAuthor,
     },
     {
       field: "category",
       headerName: "Categoría",
       width: 150,
-      renderCell: (params) => params.value.nameCategory,
+      valueGetter: (value, row) => row.category.nameCategory,
     },
     {
       field: "editorial",
       headerName: "Editorial",
       width: 150,
-      renderCell: (params) => params.value.nameEditorial,
+      valueGetter: (value, row) => row.editorial.nameEditorial,
     },
     { field: "description", headerName: "Descripción", width: 200 },
     { field: "numberOfPage", headerName: "Número de páginas", width: 150 },

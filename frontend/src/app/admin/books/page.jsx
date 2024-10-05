@@ -1,5 +1,6 @@
 import CustomCard from "@/components/Card";
 import TableBooks from "@/sections/admin-books/TableBooks";
+import { Button } from "@mui/material";
 import React from "react";
 
 export default function AdminBooksPage() {
@@ -9,7 +10,9 @@ export default function AdminBooksPage() {
         Administrar libros
       </h1>
       <CustomCard className="w-full">
-        <div className=""></div>
+        <div className="mb-5">
+          <Button variant="contained">Crear nuevo libro</Button>
+        </div>
         <TableBooks />
       </CustomCard>
     </main>
