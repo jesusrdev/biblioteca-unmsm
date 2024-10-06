@@ -1,4 +1,4 @@
-package org.cibertec.backend;
+package org.cibertec.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
