@@ -2,18 +2,15 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import { useState } from "react";
-import CustomList from "@/sections/layout/CustomList";
 import SearchInput from "@/sections/layout/SearchInput";
 import ProfileButton from "@/sections/layout/ProfileButton";
-import { principalList, sectionList } from "@/sections/layout/items-bar";
-import Image from "next/image";
+import LeftBar from "@/sections/layout/LeftBar";
 
 const drawerWidth = 240;
 
@@ -36,27 +33,7 @@ export default function ResponsiveDrawer({ children }) {
     }
   };
 
-  const drawer = (
-    <div>
-      <Toolbar className="px-3">
-        <div className="flex items-center justify-center p-2 rounded-full bg-gradient-to-bl from-blue-gr/40 from-0% via-to-purple-gr/40 via-50% to-pink-gr/40 to-100% gradient-logo mr-2 border-[4px] border-white border-solid shadow-xl">
-          <Image
-            src="/icons/logo.svg"
-            alt="logo"
-            width={28}
-            height={28}
-            className=""
-            priority
-          />
-        </div>
-        <p className="text-xl font-bold">Yisus Library</p>
-      </Toolbar>
-      <Divider />
-      <CustomList list={principalList} />
-      <Divider />
-      <CustomList list={sectionList} />
-    </div>
-  );
+  const drawer = <LeftBar />;
 
   return (
     <Box sx={{ display: "flex" }}>
