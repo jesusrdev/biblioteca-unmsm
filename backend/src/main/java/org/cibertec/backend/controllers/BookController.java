@@ -159,7 +159,7 @@ public class BookController {
         if (imageFile != null && !imageFile.isEmpty()){
 
             //Obtener la imagen antigua
-            String oldImageUrl = existingBook.getImageUrl();
+            String oldImageUrl = existingBook.getImageUrl().replace("/books/", "");
 
             // Verificar si existe la imagen
             if (oldImageUrl != null){
