@@ -1,19 +1,24 @@
 package org.cibertec.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "BOOK")
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_book")
     private Integer idBook;
 
     @Column(name = "title", length = 50, nullable = false)
@@ -57,5 +62,10 @@ public class Book {
 
     @Column(name = "isbn", length = 10, nullable = false)
     private String isbn;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    private List<CopyBook> copyBooks;
+
 
 }
