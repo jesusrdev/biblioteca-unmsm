@@ -25,7 +25,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} ${inter.variable} bg-background`}>
+      <body
+        className={`${montserrat.className} ${inter.variable} bg-background`}
+      >
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>

@@ -7,14 +7,14 @@ import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import SearchInput from "@/sections/layout/SearchInput";
 import ProfileButton from "@/sections/layout/ProfileButton";
 import LeftBar from "@/sections/layout/LeftBar";
 
 const drawerWidth = 240;
 
-export default function ResponsiveDrawer({ children }) {
+export default function ResponsiveDrawer({ children, searchParams }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -57,7 +57,9 @@ export default function ResponsiveDrawer({ children }) {
               <MenuIcon />
             </ListItemIcon>
           </IconButton>
-          <SearchInput />
+          <Suspense>
+            <SearchInput />
+          </Suspense>
           <ProfileButton />
         </Toolbar>
       </AppBar>

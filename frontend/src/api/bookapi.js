@@ -8,6 +8,7 @@ export const getBooks = async (projection) => {
 };
 
 export const getBookByFilter = async (
+  query,
   idCategory,
   idEditorial,
   idAuthor,
@@ -15,7 +16,7 @@ export const getBookByFilter = async (
   size
 ) => {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/books/search?idCategory=${idCategory}&idEditorial=${idEditorial}&idAuthor=${idAuthor}&page=${page}&size=${size}`
+    `${process.env.NEXT_PUBLIC_API_URL}/books/search?query=${query}&idCategory=${idCategory}&idEditorial=${idEditorial}&idAuthor=${idAuthor}&page=${page}&size=${size}`
   );
   return response.data;
 };

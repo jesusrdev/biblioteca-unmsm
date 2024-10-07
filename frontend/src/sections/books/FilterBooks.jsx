@@ -1,5 +1,4 @@
 "use client";
-
 import { getAuthors } from "@/api/authorapi";
 import { getBookByFilter, getBooks } from "@/api/bookapi";
 import { getCategories } from "@/api/categoryapi";
@@ -8,9 +7,8 @@ import CustomCard from "@/components/Card";
 import { useState, useEffect } from "react";
 import FilterOptions from "./FilterOptions";
 import BooksContainer from "./BooksContainer";
-import { flushSync } from "react-dom";
 
-export default function FilterBooks() {
+export default function FilterBooks({ searchParams }) {
   const [books, setBooks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [editorials, setEditorials] = useState([]);
@@ -20,14 +18,20 @@ export default function FilterBooks() {
     category: "",
     editorial: "",
     author: "",
+    query: searchParams.query,
   });
 
   useEffect(() => {
-    fetchBooks();
+    const options = {
+      ...filterOptions,
+      query: searchParams.query,
+    };
+    setFilterOptions(options);
+    fetchBooksByFilter(options);
     fetchCategories();
     fetchEditorials();
     fetchAuthors();
-  }, []);
+  }, [searchParams.query]);
 
   const fetchBooks = async () => {
     try {
@@ -41,6 +45,7 @@ export default function FilterBooks() {
   const fetchBooksByFilter = async (options) => {
     try {
       const response = await getBookByFilter(
+        options.query,
         options.category,
         options.editorial,
         options.author
