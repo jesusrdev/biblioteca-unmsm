@@ -1,7 +1,7 @@
 import CustomCard from "@/components/Card";
 import TableCategories from "@/sections/admin-categories/TableCategories";
 
-export default function page() {
+export default function AdminCategoriesPage() {
   return (
     <main className="w-full p-8">
       <h1 className="mt-0 text-5xl font-bold text-center">
