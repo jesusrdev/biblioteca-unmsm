@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import CustomTable from "@/components/mui/CustomTable";
 import { getBooks, createBook, updateBook, deleteBook } from "@/api/bookapi";
 import { getAuthors } from "@/api/authorapi";
@@ -98,15 +97,6 @@ export default function TableBooks() {
       handleCloseModal();
     } catch (error) {
       console.error("Error saving book:", error);
-    }
-  };
-
-  const handleDeleteBook = async (id) => {
-    try {
-      await deleteBook(id);
-      setBooks(books.filter((book) => book.id !== id));
-    } catch (error) {
-      console.error("Error deleting book:", error);
     }
   };
 
