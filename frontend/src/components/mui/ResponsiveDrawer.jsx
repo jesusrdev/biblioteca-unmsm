@@ -107,9 +107,7 @@ export default function ResponsiveDrawer({ children }) {
           {drawer}
         </Drawer>
       </Box>
-      <div className="sm:w-[calc(100%-240px)] w-full mt-[64px]">
-      {children}  
-      </div>
+      <div className="sm:w-[calc(100%-240px)] w-full mt-[64px]">{children}</div>
     </Box>
   );
 }
