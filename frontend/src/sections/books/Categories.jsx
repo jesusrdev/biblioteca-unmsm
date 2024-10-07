@@ -26,7 +26,7 @@ export default function Categories() {
         <CarouselBooks
           key={index}
           text={category.nameCategory}
-          urlGet={category._links.books.href}
+          urlGet={category._links.books.href.replaceAll("{?projection}", "?projection=detailed")}
           button={<Button variant="contained">Ver más</Button>}
         />
       ))}
