@@ -12,22 +12,29 @@ public class BackendApplication {
 	private final EditorialRepository editorialRepository;
 	private final BookRepository bookRepository;
 	private final CopyBookRepository copyBookRepository;
+	private final PersonalInfoRepository personalInfoRepository;
+	private final UserRepository userRepository;
+	private final LoanRepository loanRepository;
+
 
 	public BackendApplication(
 			CategoryRepository categoryRepository,
 			AuthorRepository authorRepository,
 			EditorialRepository editorialRepository,
 			BookRepository bookRepository,
-			CopyBookRepository copyBookRepository
-
-
+			CopyBookRepository copyBookRepository,
+			PersonalInfoRepository personalInfoRepository,
+			UserRepository userRepository,
+			LoanRepository loanRepository
 	) {
 		this.categoryRepository = categoryRepository;
 		this.authorRepository = authorRepository;
 		this.editorialRepository = editorialRepository;
 		this.bookRepository = bookRepository;
 		this.copyBookRepository = copyBookRepository;
-
+		this.personalInfoRepository = personalInfoRepository;
+		this.userRepository = userRepository;
+		this.loanRepository = loanRepository;
 	}
 
 	public static void main(String[] args) {

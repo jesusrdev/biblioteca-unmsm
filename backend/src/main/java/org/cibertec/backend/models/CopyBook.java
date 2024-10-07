@@ -1,5 +1,7 @@
 package org.cibertec.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name="Copy_Book")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CopyBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +30,8 @@ public class CopyBook {
 
     @Column(name = "condition_book", nullable = false)
     private String conditionBook;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "copyBook", fetch = FetchType.LAZY)
+    private List<Loan> loans;
 }
