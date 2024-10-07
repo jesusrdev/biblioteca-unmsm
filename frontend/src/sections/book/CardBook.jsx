@@ -1,6 +1,6 @@
 import CustomCard from "@/components/Card";
 import { Button, CardContent } from "@mui/material";
-import CustomCardMedia from "../book/CustomCardMedia";
+import CustomCardMedia from "./CustomCardMedia";
 
 export default function CardBook({ book }) {
   return (

@@ -1,5 +1,5 @@
 "use client";
-import CardBook from "@/sections/books/CardBook";
+import CardBook from "@/sections/book/CardBook";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
