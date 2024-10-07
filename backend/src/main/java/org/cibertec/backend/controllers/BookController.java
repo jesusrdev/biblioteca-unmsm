@@ -20,8 +20,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("books")
@@ -183,8 +186,30 @@ public class BookController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el libro" + e.getMessage());
         }
+    }
 
+    @GetMapping("/search")
+    public List<Book> searchBooks(
+            @RequestParam(required = false) Integer idEditorial,
+            @RequestParam(required = false) Integer idAuthor,
+            @RequestParam(required = false) Integer idCategory,
+            @RequestParam(required = false) String isbn,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String authorName,
+            @RequestParam(required = false) String editorialName,
+            @RequestParam(required = false) String categoryName) {
 
+        // Obtenemos todos los libros y filtramos en memoria
+        return StreamSupport.stream(bookRepository.findAll().spliterator(), false)
+                .filter(book -> idEditorial == null || book.getEditorial().getIdEditorial() == idEditorial)
+                .filter(book -> idAuthor == null || book.getAuthor().getIdAuthor() == idAuthor)
+                .filter(book -> idCategory == null || book.getCategory().getIdCategory() == idCategory)
+                .filter(book -> isbn == null || book.getIsbn().equalsIgnoreCase(isbn))
+                .filter(book -> title == null || book.getTitle().toLowerCase().contains(title.toLowerCase()))
+                .filter(book -> authorName == null || book.getAuthor().getNameAuthor().toLowerCase().contains(authorName.toLowerCase()))
+                .filter(book -> editorialName == null || book.getEditorial().getNameEditorial().toLowerCase().contains(editorialName.toLowerCase()))
+                .filter(book -> categoryName == null || book.getCategory().getNameCategory().toLowerCase().contains(categoryName.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
 }
