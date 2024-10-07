@@ -8,7 +8,7 @@ export const getBooks = async (projection) => {
 };
 
 export const getBookByFilter = async (
-  query,
+  query ="",
   idCategory,
   idEditorial,
   idAuthor,
