@@ -1,9 +1,6 @@
 package org.cibertec.backend;
 
-import org.cibertec.backend.repositories.AuthorRepository;
-import org.cibertec.backend.repositories.BookRepository;
-import org.cibertec.backend.repositories.CategoryRepository;
-import org.cibertec.backend.repositories.EditorialRepository;
+import org.cibertec.backend.repositories.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -14,17 +11,30 @@ public class BackendApplication {
 	private final AuthorRepository authorRepository;
 	private final EditorialRepository editorialRepository;
 	private final BookRepository bookRepository;
+	private final CopyBookRepository copyBookRepository;
+	private final PersonalInfoRepository personalInfoRepository;
+	private final UserRepository userRepository;
+	private final LoanRepository loanRepository;
+
 
 	public BackendApplication(
 			CategoryRepository categoryRepository,
 			AuthorRepository authorRepository,
 			EditorialRepository editorialRepository,
-			BookRepository bookRepository
+			BookRepository bookRepository,
+			CopyBookRepository copyBookRepository,
+			PersonalInfoRepository personalInfoRepository,
+			UserRepository userRepository,
+			LoanRepository loanRepository
 	) {
 		this.categoryRepository = categoryRepository;
 		this.authorRepository = authorRepository;
 		this.editorialRepository = editorialRepository;
 		this.bookRepository = bookRepository;
+		this.copyBookRepository = copyBookRepository;
+		this.personalInfoRepository = personalInfoRepository;
+		this.userRepository = userRepository;
+		this.loanRepository = loanRepository;
 	}
 
 	public static void main(String[] args) {
