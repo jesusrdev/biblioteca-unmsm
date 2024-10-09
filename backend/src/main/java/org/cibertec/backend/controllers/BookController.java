@@ -194,11 +194,7 @@ public class BookController {
             @RequestParam(required = false) Integer idAuthor,
             @RequestParam(required = false) Integer idCategory,
             @RequestParam(required = false) String isbn,
-            @RequestParam(required = false) String title,
             @RequestParam(required = false) String query
-//            @RequestParam(required = false) String authorName,
-//            @RequestParam(required = false) String editorialName,
-//            @RequestParam(required = false) String categoryName
     ) {
 
         // Obtenemos todos los libros y filtramos en memoria
@@ -212,9 +208,6 @@ public class BookController {
                         || book.getEditorial().getNameEditorial().toLowerCase().contains(query.toLowerCase())
                         || book.getCategory().getNameCategory().toLowerCase().contains(query.toLowerCase())
                 )
-//                .filter(book -> query == null || book.getAuthor().getNameAuthor().toLowerCase().contains(query.toLowerCase()))
-//                .filter(book -> query == null || book.getEditorial().getNameEditorial().toLowerCase().contains(query.toLowerCase()))
-//                .filter(book -> query == null || book.getCategory().getNameCategory().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
