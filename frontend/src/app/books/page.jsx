@@ -4,7 +4,7 @@ export default function BooksPage({ searchParams }) {
   return (
     <main className="w-full p-8">
       <h1 className="mt-0 text-5xl font-bold text-center ">
-        Administrar libros
+        Filtrar libros
       </h1>
       <FilterBooks searchParams={searchParams} />
     </main>

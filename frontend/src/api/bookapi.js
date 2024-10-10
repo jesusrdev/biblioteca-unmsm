@@ -8,7 +8,7 @@ export const getBooks = async (projection) => {
 };
 
 export const getBookByFilter = async (
-  query,
+  query = "",
   idCategory,
   idEditorial,
   idAuthor,
@@ -24,6 +24,11 @@ export const getBookByFilter = async (
 export async function getBookByCategory(url) {
   const response = await axios.get(url);
   return response.data._embedded.books;
+}
+
+export async function getBookById(id, projection) {
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}?projection=${projection}`);
+  return response.data;
 }
 
 export const createBook = async (book) => {
