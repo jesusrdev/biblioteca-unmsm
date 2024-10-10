@@ -5,11 +5,12 @@ import {
   TextField,
 } from "@mui/material";
 
-export default function FormModalAuthors({
+export default function LoanBookModal({
   openModal,
   handleCloseModal,
-  handleSaveAuthor,
-  currentAuthor,
+  handleCreateLoan,
+  user,
+  idCopyBook,
   style,
 }) {
   const modalStyle = {
@@ -33,16 +34,37 @@ export default function FormModalAuthors({
       onClose={handleCloseModal}
       aria-labelledby="author-modal-title"
     >
-      <Box sx={modalStyle} component="form" onSubmit={handleSaveAuthor}>
+      <Box sx={modalStyle} component="form" onSubmit={handleCreateLoan}>
         <h2 id="author-modal-title" className="my-0 mb-2 leading-none">
-          {currentAuthor ? "Editar Autor" : "Agregar Autor"}
+          Solicitar libro
         </h2>
         <TextField
-          name="nameAuthor"
-          label="Nombre"
+          name="id_user"
+          label="Usuario"
           fullWidth
           margin="normal"
-          defaultValue={currentAuthor?.nameAuthor || ""}
+          value={user}
+        />
+        <TextField
+          name="id_copy"
+          label="Id del ejemplar"
+          fullWidth
+          margin="normal"
+          value={idCopyBook}
+        />
+        <TextField
+          name="date_loan"
+          label="Fecha de inicio"
+          type="date"
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          name="return_date"
+          label="Fecha de devolución"
+          type="date"
+          fullWidth
+          margin="normal"
         />
         <Button
           type="submit"
