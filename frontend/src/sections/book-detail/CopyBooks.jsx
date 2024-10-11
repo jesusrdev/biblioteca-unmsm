@@ -37,11 +37,13 @@ export default function CopyBooks({ copyBooks, fetchCopyBooks }) {
         }
       }
 
-      formData.append("loan_status", "aprobado");
+      formData.append("id_copy", idCopyBook);
+      formData.append("id_user", user);
+      formData.append("loan_status", "pendiente");
 
       const response = await createLoan(formData);
 
-      const copyBook = await changeStatusCopyBook(formData.get("id_copy"), "prestado");
+      const copyBook = await changeStatusCopyBook(idCopyBook, "prestado");
 
       fetchCopyBooks();
 

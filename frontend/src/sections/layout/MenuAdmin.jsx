@@ -7,10 +7,11 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const items = [
   { text: "Mantener libros", url: "/admin/books" },
-  { text: "Mantener préstamos", url: "/admin/loans" },
+  { text: "Mantener ejemplares", url: "/admin/copybooks" },
   { text: "Mantener categorías", url: "/admin/categories" },
   { text: "Mantener editoriales", url: "/admin/editorials" },
   { text: "Mantener autores", url: "/admin/authors" },
+  { text: "Mantener préstamos", url: "/admin/loans" },
   { text: "Mantener usuarios", url: "/admin/users" },
 ];
 

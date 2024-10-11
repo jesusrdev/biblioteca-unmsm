@@ -29,7 +29,7 @@ export default function BookDetail({ id }) {
 
   const fetchCopyBooks = async (url) => {
     try {
-      const response = await getCopyBooksByUrl(url);
+      const response = await getCopyBooksByUrl(url.replace("{?projection}", ""));
       setCopyBooks(response);
     } catch (error) {
       console.error(error);

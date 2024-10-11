@@ -38,26 +38,15 @@ export default function LoanBookModal({
         <h2 id="author-modal-title" className="my-0 mb-2 leading-none">
           Solicitar libro
         </h2>
-        <TextField
-          name="id_user"
-          label="Usuario"
-          fullWidth
-          margin="normal"
-          value={user}
-        />
-        <TextField
-          name="id_copy"
-          label="Id del ejemplar"
-          fullWidth
-          margin="normal"
-          value={idCopyBook}
-        />
+        {/* <input type="hidden" name="id_user" value={user} />
+        <input type="hidden" name="id_copy" value={idCopyBook} /> */}
         <TextField
           name="date_loan"
           label="Fecha de inicio"
           type="date"
           fullWidth
           margin="normal"
+          InputLabelProps={{ shrink: true }}
         />
         <TextField
           name="return_date"
@@ -65,6 +54,7 @@ export default function LoanBookModal({
           type="date"
           fullWidth
           margin="normal"
+          InputLabelProps={{ shrink: true }}
         />
         <Button
           type="submit"
