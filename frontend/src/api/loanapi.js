@@ -13,6 +13,11 @@ export const getLoans = async (projection) => {
   return response.data._embedded.loans
 }
 
+export const getMyLoans = async (idUser, projection) => {
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${idUser}/loans?projection=${projection}`)
+  return response.data._embedded.loans
+}
+
 export const updaStateLoan = async (id, status) => {
   const response = await axios.patch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/loans/${id}`,
