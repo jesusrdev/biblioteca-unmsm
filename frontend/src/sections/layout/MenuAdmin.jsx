@@ -12,7 +12,7 @@ const items = [
   { text: "Mantener editoriales", url: "/admin/editorials" },
   { text: "Mantener autores", url: "/admin/authors" },
   { text: "Mantener préstamos", url: "/admin/loans" },
-  { text: "Mantener usuarios", url: "/admin/users" },
+  // { text: "Mantener usuarios", url: "/admin/users" },
 ];
 
 export default function MenuAdmin() {

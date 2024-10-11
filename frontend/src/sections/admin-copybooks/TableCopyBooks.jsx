@@ -6,7 +6,11 @@ import { Box } from "@mui/material";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import { createCopyBook, getCopyBooks, updateCopyBook } from "@/api/copybookapi";
+import {
+  createCopyBook,
+  getCopyBooks,
+  updateCopyBook,
+} from "@/api/copybookapi";
 import FormModalCopyBooks from "./FormModalCopyBooks";
 
 export default function TableCopyBooks() {
@@ -79,7 +83,12 @@ export default function TableCopyBooks() {
       width: 100,
       editable: false,
     },
-    { field: "title", headerName: "Título", width: 200, renderCell: (params) => params.row.book.title },
+    {
+      field: "title",
+      headerName: "Título",
+      width: 200,
+      valueGetter: (value, row) => row.book.title,
+    },
     { field: "status", headerName: "Status", width: 150 },
     { field: "conditionBook", headerName: "Condición", width: 250 },
     {

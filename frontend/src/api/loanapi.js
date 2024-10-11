@@ -8,7 +8,17 @@ export const createLoan = async (loan) => {
   return response.data
 }
 
-export const getLoans = async (id) => {
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/loans/${id}`)
+export const getLoans = async (projection) => {
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/loans?projection=${projection}`)
   return response.data._embedded.loans
+}
+
+export const updaStateLoan = async (id, status) => {
+  const response = await axios.patch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/loans/${id}`,
+    {
+      loanStatus: status,
+    }
+  )
+  return response.data
 }
