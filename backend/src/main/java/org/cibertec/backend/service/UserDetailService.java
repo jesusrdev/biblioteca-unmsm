@@ -1,6 +1,8 @@
 package org.cibertec.backend.service;
 
+import org.cibertec.backend.models.PersonalInfo;
 import org.cibertec.backend.models.UserModel;
+import org.cibertec.backend.repositories.PersonalInfoRepository;
 import org.cibertec.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,18 +20,25 @@ public class UserDetailService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PersonalInfoRepository personalInfoRepository;
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String code) throws UsernameNotFoundException {
 
-        // Buscar al user por su nombre
-        UserModel userModel = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        // Buscar al personalInfo por su codigo
+        PersonalInfo personalInfo = personalInfoRepository.findByCode(code).orElseThrow(() ->
+                new UsernameNotFoundException("Código de estudiante no encontrado"));
+
+        // Buscar al user por su infoId
+        UserModel userModel = userRepository.findByInfoId(personalInfo.getInfoId())
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        "No hay usuarios registrados con este código de estudiante"));
 
         // Convertir enumRol a autoridades para spring security
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
         // Agregar el rol del user
-        authorityList.add( new SimpleGrantedAuthority("ROLE_" + userModel.getRole().name()));
+        authorityList.add(new SimpleGrantedAuthority("ROLE_" + userModel.getRole().name()));
 
 
         return new User(userModel.getUsername(),
@@ -40,7 +49,6 @@ public class UserDetailService implements UserDetailsService {
                 true,
                 authorityList);
     }
-
 
 
 }

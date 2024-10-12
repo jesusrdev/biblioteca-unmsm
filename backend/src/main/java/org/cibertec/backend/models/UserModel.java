@@ -21,8 +21,8 @@ public class UserModel {
     @Column(name = "user_id")
     private int userId;
 
-    @Column(name = "username")
-    private String username;
+//    @Column(name = "username")
+//    private String username;
 
     @Column(name = "password")
     private String password;
