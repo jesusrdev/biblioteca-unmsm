@@ -1,7 +1,6 @@
 package org.cibertec.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +21,7 @@ public class Loan {
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "id_user", nullable = false)
-    private User user;
+    private UserModel user;
 
     @Column(name = "id_user", nullable = false, insertable = false, updatable = false)
     private int idUser;

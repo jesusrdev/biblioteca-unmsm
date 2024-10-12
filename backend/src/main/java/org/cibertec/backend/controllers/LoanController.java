@@ -2,19 +2,21 @@ package org.cibertec.backend.controllers;
 
 import org.cibertec.backend.models.CopyBook;
 import org.cibertec.backend.models.Loan;
-import org.cibertec.backend.models.User;
+import org.cibertec.backend.models.UserModel;
 import org.cibertec.backend.repositories.CopyBookRepository;
 import org.cibertec.backend.repositories.LoanRepository;
 import org.cibertec.backend.repositories.UserRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.Optional;
 
 @RestController
+@PreAuthorize("isAuthenticated()")
 public class LoanController {
     private final LoanRepository loanRepository;
     private final CopyBookRepository copyBookRepository;
@@ -39,7 +41,7 @@ public class LoanController {
                 .orElseThrow(() -> new RuntimeException("El copyBook no existe con ID: " + idCopy));
 
         // Obtener el usuario
-        User user = userRepository.findById(idUser)
+        UserModel user = userRepository.findById(idUser)
                 .orElseThrow(() -> new RuntimeException("El usuario no existe con ID: " + idUser));
 
         // Crear un nuevo objeto de loan
