@@ -1,16 +1,20 @@
-import { DataGrid, GridToolbar, GridToolbarContainer } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, GridToolbarContainer, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
 function CustomToolbar({ onAdd }) {
   return (
-    <GridToolbarContainer>
+    <GridToolbarContainer className="flex items-end justify-between">
+      <div>
+
       {onAdd && (
         <Button color="primary" startIcon={<AddIcon />} onClick={onAdd}>
           Agregar
         </Button>
       )}
       <GridToolbar />
+      </div>
+      <GridToolbarQuickFilter />
     </GridToolbarContainer>
   );
 }

@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @PreAuthorize("isAuthenticated()")
+@RequestMapping("loans")
 public class LoanController {
     private final LoanRepository loanRepository;
     private final CopyBookRepository copyBookRepository;
@@ -28,7 +29,7 @@ public class LoanController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/loan")
+    @PostMapping("/create")
     public ResponseEntity<?> loan(
             @RequestParam("id_copy") Integer idCopy,
             @RequestParam("id_user") Integer idUser,
@@ -60,7 +61,7 @@ public class LoanController {
         }
     }
 
-    @PutMapping("updateloan/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<?> updateloan(
             @PathVariable Integer id,
             @RequestParam("id_copy") Integer idCopy,

@@ -1,9 +1,11 @@
 import CustomCard from "@/components/Card";
 import { Button, CardContent } from "@mui/material";
-import CustomCardMedia from "../book/CustomCardMedia";
+import CustomCardMedia from "./CustomCardMedia";
+import Link from "next/link";
 
 export default function CardBook({ book }) {
   return (
+    <Link href={`/books/${book.idBook}`}>
     <Button className="h-full p-0 m-auto w-fit">
       <CustomCard className="h-full px-0 py-0 m-0 max-w-44">
         <CustomCardMedia
@@ -25,5 +27,6 @@ export default function CardBook({ book }) {
         </CardContent>
       </CustomCard>
     </Button>
+    </Link>
   );
 }
