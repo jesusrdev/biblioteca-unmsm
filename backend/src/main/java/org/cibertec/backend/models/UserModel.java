@@ -14,18 +14,22 @@ import java.util.List;
 @Entity
 @Table(name = "USER")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User {
+public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int userId;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "password")
     private String password;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
 
     @Column(name = "creation_date")
     private Date creationDate;
@@ -41,5 +45,10 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Loan> loans;
+
+    private boolean enabled;
+    private boolean accountNonExpired;
+    private boolean credentialsNonExpired;
+    private boolean accountNonLocked;
 
 }

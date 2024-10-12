@@ -42,5 +42,5 @@ public class PersonalInfo {
     private String jobTitle;
 
     @OneToOne(mappedBy = "personalInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private User user;
+    private UserModel user;
 }
