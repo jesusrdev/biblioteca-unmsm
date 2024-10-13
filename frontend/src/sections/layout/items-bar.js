@@ -2,7 +2,7 @@ export const principalList = [
   { text: "Inicio", icon: "/icons/home.svg", url: "/" },
   { text: "Libros", icon: "/icons/book.svg", url: "/books" },
   { text: "Mis Préstamos", icon: "/icons/open-book.svg", url: "/loans" },
-  { text: "Favoritos", icon: "/icons/heart.svg", url: "/favorites" },
+  // { text: "Favoritos", icon: "/icons/heart.svg", url: "/favorites" },
 ];
 
 export const sectionList = [

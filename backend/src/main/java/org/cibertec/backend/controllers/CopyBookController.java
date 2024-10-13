@@ -5,11 +5,14 @@ import org.cibertec.backend.repositories.BookRepository;
 import org.cibertec.backend.repositories.CopyBookRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
+@PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
+@RequestMapping("/copybooks")
 public class CopyBookController {
     public final CopyBookRepository copyBookRepository;
     public final BookRepository bookRepository;
@@ -19,7 +22,7 @@ public class CopyBookController {
         this.bookRepository = bookRepository; // Asignar bookRepository
     }
 
-    @PostMapping("/copybook")
+    @PostMapping("/create")
     public ResponseEntity<?> copybook(
             @RequestParam("id_book") Integer idBook,
             @RequestParam("status") String status,
@@ -44,7 +47,7 @@ public class CopyBookController {
 
     }
 
-    @PutMapping("updatecopyBook/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updatecopyBook(
             @PathVariable Integer id,
             @RequestParam("id_book") Integer idBook,

@@ -2,6 +2,7 @@ package org.cibertec.backend.controllers;
 
 import org.cibertec.backend.repositories.PersonalInfoRepository;
 import org.cibertec.backend.repositories.UserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

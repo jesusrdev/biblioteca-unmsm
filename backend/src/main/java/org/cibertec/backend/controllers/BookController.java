@@ -11,6 +11,7 @@ import org.cibertec.backend.repositories.EditorialRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +29,7 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("books")
+@PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
 public class BookController {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
@@ -194,11 +196,7 @@ public class BookController {
             @RequestParam(required = false) Integer idAuthor,
             @RequestParam(required = false) Integer idCategory,
             @RequestParam(required = false) String isbn,
-            @RequestParam(required = false) String title,
             @RequestParam(required = false) String query
-//            @RequestParam(required = false) String authorName,
-//            @RequestParam(required = false) String editorialName,
-//            @RequestParam(required = false) String categoryName
     ) {
 
         // Obtenemos todos los libros y filtramos en memoria
@@ -212,9 +210,6 @@ public class BookController {
                         || book.getEditorial().getNameEditorial().toLowerCase().contains(query.toLowerCase())
                         || book.getCategory().getNameCategory().toLowerCase().contains(query.toLowerCase())
                 )
-//                .filter(book -> query == null || book.getAuthor().getNameAuthor().toLowerCase().contains(query.toLowerCase()))
-//                .filter(book -> query == null || book.getEditorial().getNameEditorial().toLowerCase().contains(query.toLowerCase()))
-//                .filter(book -> query == null || book.getCategory().getNameCategory().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
