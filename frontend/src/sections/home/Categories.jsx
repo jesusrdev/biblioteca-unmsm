@@ -10,7 +10,7 @@ export default function Categories() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await getCategories();
+        const response = await getCategories("simple");
         setCategoriesBooks(response);
       } catch (error) {
         console.log(error);
@@ -26,7 +26,11 @@ export default function Categories() {
         <CarouselBooks
           key={index}
           text={category.nameCategory}
-          urlGet={category._links.books.href.replaceAll("{?projection}", "?projection=detailed")}
+          urlGet={
+            process.env.NEXT_PUBLIC_API_URL +
+            "/api/books/search/findByIdCategory?idCategory=" +
+            category.idCategory
+          }
           button={<Button variant="contained">Ver más</Button>}
         />
       ))}
