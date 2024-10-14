@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .build();
     }*/
 
-    /*@Bean
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
@@ -85,7 +85,7 @@ public class SecurityConfig {
                 .exceptionHandling((exceptionHandling) ->
                         exceptionHandling.authenticationEntryPoint(exceptionHandler))
                 .build();
-    }*/
+    }
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
@@ -112,13 +112,13 @@ public class SecurityConfig {
 //        return NoOpPasswordEncoder.getInstance();
     }
 
-    @Bean
+    /*@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable()).cors(Customizer.withDefaults())
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests.anyRequest().permitAll());
         return http.build();
-    }
+    }*/
 
     // Add Global CORS filter inside the class
     @Bean
