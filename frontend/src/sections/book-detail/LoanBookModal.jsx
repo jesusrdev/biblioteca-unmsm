@@ -9,8 +9,6 @@ export default function LoanBookModal({
   openModal,
   handleCloseModal,
   handleCreateLoan,
-  user,
-  idCopyBook,
   style,
 }) {
   const modalStyle = {

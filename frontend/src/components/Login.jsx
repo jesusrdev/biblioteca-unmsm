@@ -4,8 +4,10 @@ import CustomCard from "./Card";
 import { Button, Snackbar, Stack, TextField } from "@mui/material";
 import axios from "axios";
 import ResponsiveDrawer from "./mui/ResponsiveDrawer";
+import { useRouter } from "next/navigation";
 
 export default function Login({ children }) {
+  const router = useRouter();
   const token = sessionStorage.getItem("jwt");
   const [user, setUser] = useState({
     code: "",
@@ -94,6 +96,7 @@ export default function Login({ children }) {
     sessionStorage.removeItem("roles");
     sessionStorage.removeItem("user");
     setAuth(false);
+    router.push("/");
   };
 
   if (isAuthenticated) {

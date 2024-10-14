@@ -1,9 +1,6 @@
 package org.cibertec.backend.controllers;
 
-import org.cibertec.backend.models.CopyBook;
-import org.cibertec.backend.models.Loan;
-import org.cibertec.backend.models.PersonalInfo;
-import org.cibertec.backend.models.UserModel;
+import org.cibertec.backend.models.*;
 import org.cibertec.backend.repositories.CopyBookRepository;
 import org.cibertec.backend.repositories.LoanRepository;
 import org.cibertec.backend.repositories.PersonalInfoRepository;
@@ -66,6 +63,10 @@ public class LoanController {
 
         try {
             Loan savedLoan = loanRepository.save(loan);
+
+            copyBook.setStatus("prestado");
+            copyBookRepository.save(copyBook);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(savedLoan);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar prestamo de libro" + e.getMessage());

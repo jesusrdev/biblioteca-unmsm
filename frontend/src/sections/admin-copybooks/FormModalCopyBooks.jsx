@@ -40,7 +40,7 @@ export default function FormModalCopyBooks({
     >
       <Box sx={modalStyle} component="form" onSubmit={handleSaveCopyBook}>
         <h2 id="copy-book-modal-title" className="my-0 mb-2 leading-none">
-          {currentCopyBook ? "Editar Libro" : "Agregar Libro"}
+          {currentCopyBook ? "Editar ejemplar" : "Agregar ejemplar"}
         </h2>
         <FormControl fullWidth margin="normal">
           <InputLabel id="book-label">Libro</InputLabel>

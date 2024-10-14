@@ -10,7 +10,7 @@ import { changeStatusCopyBook } from "@/api/copybookapi";
 export default function CopyBooks({ copyBooks, fetchCopyBooks }) {
   const [openModal, setOpenModal] = useState(false);
   const [idCopyBook, setIdCopyBook] = useState(null);
-  const user = 1;
+  const code = sessionStorage.getItem("user");
 
   const handleOpenModal = (idCopyBook = null) => {
     setIdCopyBook(idCopyBook);
@@ -38,12 +38,9 @@ export default function CopyBooks({ copyBooks, fetchCopyBooks }) {
       }
 
       formData.append("id_copy", idCopyBook);
-      formData.append("id_user", user);
-      formData.append("loan_status", "pendiente");
+      formData.append("code", code);
 
       const response = await createLoan(formData);
-
-      const copyBook = await changeStatusCopyBook(idCopyBook, "prestado");
 
       fetchCopyBooks();
 
@@ -94,7 +91,7 @@ export default function CopyBooks({ copyBooks, fetchCopyBooks }) {
   ];
 
   return (
-    <CustomCard className="w-full col-span-full px-5 py-5">
+    <CustomCard className="w-full px-5 py-5 col-span-full">
       <DataGrid
         rows={copyBooks}
         columns={columns}
@@ -127,7 +124,6 @@ export default function CopyBooks({ copyBooks, fetchCopyBooks }) {
         openModal={openModal}
         handleCloseModal={handleCloseModal}
         handleCreateLoan={handleCreateLoan}
-        user={user}
         idCopyBook={idCopyBook}
       />
     </CustomCard>
