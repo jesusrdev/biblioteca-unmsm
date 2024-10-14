@@ -69,12 +69,12 @@ public class SecurityConfig {
                             .permitAll()
                         .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
 
-                        .requestMatchers(HttpMethod.GET, "/api/editorials").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/editorials/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/personalInfo").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/books").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/books/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/copyBooks").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/authors").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/categories").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/authors/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/categories/**").authenticated()
 
                         .requestMatchers(HttpMethod.GET, "/api/profile").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/loans").authenticated()
