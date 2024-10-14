@@ -64,8 +64,22 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.POST, "/login")
-                        .permitAll().anyRequest().authenticated())
+
+                        .requestMatchers(HttpMethod.GET, "/api/editorials").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/personalInfo").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/books").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/copyBooks").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/authors").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/categories").authenticated()
+
+                        .requestMatchers(HttpMethod.GET, "/api/profile").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/loans").authenticated()
+
+                        .requestMatchers("/api/**").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .anyRequest().authenticated())
+
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling) ->
                         exceptionHandling.authenticationEntryPoint(exceptionHandler))
@@ -91,7 +105,7 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         // Encriptado
-         return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
 
         // No encriptado
 //        return NoOpPasswordEncoder.getInstance();
