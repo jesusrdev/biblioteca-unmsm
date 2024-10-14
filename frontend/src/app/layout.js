@@ -4,7 +4,7 @@ import "./globals.css";
 import theme from "../theme";
 import { ThemeProvider } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material/styles";
-import ResponsiveDrawer from "@/components/mui/ResponsiveDrawer";
+import Login from "@/components/Login";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
-              <ResponsiveDrawer>{children}</ResponsiveDrawer>
+              <Login>{children}</Login>
             </ThemeProvider>
           </StyledEngineProvider>
         </AppRouterCacheProvider>

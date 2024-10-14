@@ -5,7 +5,7 @@ import { principalList, sectionList } from "./items-bar";
 import ButtonLeftBar from "./ButtonLeftBar";
 import Link from "next/link";
 
-export default function LeftBar() {
+export default function LeftBar({ handleLogout }) {
   return (
     <div>
       <Toolbar className="px-3">
@@ -49,6 +49,14 @@ export default function LeftBar() {
             />
           </ListItem>
         ))}
+        <ListItem disablePadding className="my-3 ">
+            <ButtonLeftBar
+              className="w-full"
+              text="Cerrar Sesión"
+              onClick={handleLogout}
+              imageSrc="/icons/logout.svg"
+            />
+          </ListItem>
       </List>
     </div>
   );

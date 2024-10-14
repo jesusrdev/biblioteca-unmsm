@@ -14,7 +14,7 @@ import LeftBar from "@/sections/layout/LeftBar";
 
 const drawerWidth = 240;
 
-export default function ResponsiveDrawer({ children, searchParams }) {
+export default function ResponsiveDrawer({ children, handleLogout }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -33,7 +33,7 @@ export default function ResponsiveDrawer({ children, searchParams }) {
     }
   };
 
-  const drawer = <LeftBar />;
+  const drawer = <LeftBar handleLogout={handleLogout} />;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -60,7 +60,7 @@ export default function ResponsiveDrawer({ children, searchParams }) {
           <Suspense>
             <SearchInput />
           </Suspense>
-          <ProfileButton />
+          <ProfileButton handleLogout={handleLogout} />
         </Toolbar>
       </AppBar>
       <Box
@@ -109,7 +109,7 @@ export default function ResponsiveDrawer({ children, searchParams }) {
           {drawer}
         </Drawer>
       </Box>
-      <div className="sm:w-[calc(100%-240px)] w-full mt-[64px]">{children}</div>
+      <div className="min-[600px]:w-[calc(100%-240px)] w-full mt-[64px]">{children}</div>
     </Box>
   );
 }

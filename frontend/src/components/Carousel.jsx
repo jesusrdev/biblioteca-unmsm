@@ -9,16 +9,20 @@ export default function CarouselComponent({ books }) {
       breakpoint: { max: 4000, min: 1000 },
       items: 4,
     },
+    desktopLarge: {
+      breakpoint: { max: 1000, min: 750 },
+      items: 2,
+    },
     desktop: {
-      breakpoint: { max: 1000, min: 800 },
-      items: 3,
+      breakpoint: { max: 750, min: 600 },
+      items: 1,
     },
     tablet: {
-      breakpoint: { max: 800, min: 500 },
+      breakpoint: { max: 600, min: 450 },
       items: 2,
     },
     mobile: {
-      breakpoint: { max: 340, min: 0 },
+      breakpoint: { max: 450, min: 0 },
       items: 1,
     },
   };
@@ -29,7 +33,7 @@ export default function CarouselComponent({ books }) {
       infinite={true}
       autoPlay={false}
       containerClass="carousel-container"
-      className="pb-7 px-8"
+      className="px-8 pb-7"
       itemClass=""
     >
       {books.map((book, index) => (
