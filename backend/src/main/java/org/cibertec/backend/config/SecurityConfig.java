@@ -61,11 +61,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.POST, "/login")
-                        .permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests((http) -> http
+                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/api-docs/**", "/book-images/**")
+                            .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling) ->
                         exceptionHandling.authenticationEntryPoint(exceptionHandler))

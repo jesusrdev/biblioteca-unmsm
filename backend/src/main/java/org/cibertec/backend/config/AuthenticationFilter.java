@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -30,6 +31,11 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         // Get token from the Authorization header
         String jws = request.getHeader(HttpHeaders.AUTHORIZATION);
 
+        if (jws == null || !jws.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (jws != null && jws.startsWith("Bearer ")) {
 
             // Remove Bearer from the token
@@ -41,15 +47,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             // Get authorities from token
             List<GrantedAuthority> authorities = jwtService.getAuthorities(jws);
 
-            // Authenticate
-//            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
-//                    java.util.Collections.emptyList());
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
             if (user != null) {
-                Authentication authentication = new UsernamePasswordAuthenticationToken(
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         user,
                         null,
                         authorities);
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
