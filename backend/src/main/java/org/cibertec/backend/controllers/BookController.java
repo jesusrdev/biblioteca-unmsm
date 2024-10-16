@@ -1,5 +1,6 @@
 package org.cibertec.backend.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.cibertec.backend.models.Author;
 import org.cibertec.backend.models.Book;
 import org.cibertec.backend.models.Category;
@@ -11,6 +12,7 @@ import org.cibertec.backend.repositories.EditorialRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,20 +30,14 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("books")
+@RequiredArgsConstructor
 public class BookController {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final CategoryRepository categoryRepository;
     private final EditorialRepository editorialRepository;
 
-    public BookController(BookRepository bookRepository, AuthorRepository authorRepository,
-                          CategoryRepository categoryRepository, EditorialRepository editorialRepository) {
-        this.bookRepository = bookRepository;
-        this.authorRepository = authorRepository;
-        this.categoryRepository = categoryRepository;
-        this.editorialRepository = editorialRepository;
-    }
-
+    @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> createBook(
             @RequestParam("title") String title,
@@ -86,6 +82,7 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
     }
 
+    @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
     private String saveImage(MultipartFile imageFile) throws Exception {
         // Obtener la extensión del archivo original
         String originalFilename = imageFile.getOriginalFilename();
@@ -112,6 +109,7 @@ public class BookController {
         return "/books/" + uniqueFilename;  // Esta es la ruta en el servidor
     }
 
+    @PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
     @PutMapping("update/{id}")
     public ResponseEntity<?> updateBook(
             @PathVariable Integer id,
@@ -188,6 +186,7 @@ public class BookController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/search")
     public List<Book> searchBooks(
             @RequestParam(required = false) Integer idEditorial,

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 export default function MyLoansTable() {
   const [loans, setLoans] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const idUser = 1;
+  const code = sessionStorage.getItem("user");
 
   useEffect(() => {
     fetchLoans();
@@ -16,7 +16,7 @@ export default function MyLoansTable() {
 
   const fetchLoans = async () => {
     try {
-      const response = await getMyLoans(idUser, "detailed");
+      const response = await getMyLoans(code);
       setLoans(response);
     } catch (error) {
       console.error(error);
@@ -47,7 +47,7 @@ export default function MyLoansTable() {
         rows={loans}
         columns={columns}
         loading={isLoading}
-        getRowId={(row) => row._links.self.href}
+        getRowId={(row) => row.idLoan}
       />
     </Box>
   );

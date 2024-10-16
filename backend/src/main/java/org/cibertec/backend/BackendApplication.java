@@ -3,8 +3,10 @@ package org.cibertec.backend;
 import org.cibertec.backend.repositories.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 @SpringBootApplication
+@EnableMethodSecurity
 public class BackendApplication {
 
 	private final CategoryRepository categoryRepository;

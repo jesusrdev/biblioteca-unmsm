@@ -25,6 +25,12 @@ export default function MenuAdmin() {
     setAnchorEl(null);
   };
 
+  const roles = sessionStorage.getItem("roles");
+
+  if (roles !== "ROLE_ADMIN") {
+    return null;
+  }
+
   return (
     <div className="w-full">
       <ButtonLeftBar

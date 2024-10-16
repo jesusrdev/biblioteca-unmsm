@@ -8,5 +8,5 @@ export const principalList = [
 export const sectionList = [
   { text: "Ajustes", icon: "/icons/settings.svg" },
   { text: "Soporte", icon: "/icons/support.svg" },
-  { text: "Cerrar Sesión", icon: "/icons/logout.svg" },
+  // { text: "Cerrar Sesión", icon: "/icons/logout.svg" },
 ];
